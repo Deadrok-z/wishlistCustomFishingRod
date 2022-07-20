@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-
+import  buttonTabBarReducer  from '../features/buttonTabBar/buttonTabBarSlice';
+import  tableReducer  from '../features/table/tableSlice';
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
+    buttonTabBar: buttonTabBarReducer,
+    table:tableReducer,
   },
 });

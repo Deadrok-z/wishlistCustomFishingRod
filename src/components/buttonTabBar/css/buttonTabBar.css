@@ -1,0 +1,27 @@
+.list {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background: white;
+    border: 1px solid black;
+    height: 70px;
+}
+
+.element {
+    list-style-type:none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 50px;
+    height: 50px;
+    border: 1px solid black;
+    margin: 0px 10px;
+    border-radius: 5px;
+    background: #ccc;
+    color:black; 
+}
+
+.element:hover{
+    background: blue !important;
+    height: 60px;
+}
