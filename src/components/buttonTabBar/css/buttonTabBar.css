@@ -8,6 +8,7 @@
 }
 
 .element {
+    cursor: pointer;
     list-style-type:none;
     display: flex;
     justify-content: center;
@@ -22,6 +23,5 @@
 }
 
 .element:hover{
-    background: blue !important;
-    height: 60px;
+    background: rgb(150, 150, 150);
 }

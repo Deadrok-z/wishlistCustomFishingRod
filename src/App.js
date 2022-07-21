@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Table from './components/table/table';
 import ButtonTabBar from './components/buttonTabBar/buttonTabBar';
+import Footer from './components/footer/footer';
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
       <ButtonTabBar />
       <p className="Table-header">Wide range of available products</p>
       <Table />
+      <Footer/>
     </div>
   );
 }
