@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './css/footer.css';
 
 export default function Footer() {
     return (
         <footer className='footer'>
-            <button className='footerButton'>To New Fishing Rod</button>
+            <div className='footerButton'>
+                <Link to='/newRod'>To New Fishing Rod</Link>
+            </div>
         </footer>
     );
 }

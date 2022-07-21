@@ -1,17 +1,21 @@
 import React from 'react';
 import './App.css';
-import Table from './components/table/table';
-import ButtonTabBar from './components/buttonTabBar/buttonTabBar';
-import Footer from './components/footer/footer';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes
+} from "react-router-dom";
+import MainPage from './components/MainPage/MainPage';
 
 export default function App() {
   return (
-    <div className="App">
-      <h3 className='d-flex justify-content-left'>Main Page</h3>
-      <ButtonTabBar />
-      <p className="Table-header">Wide range of available products</p>
-      <Table />
-      <Footer/>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route exact path="/" element={<MainPage/>} />
+          <Route exact path="/newRod"/>
+        </Routes>
+      </div>
+    </Router>
   );
 }
