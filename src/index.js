@@ -5,13 +5,16 @@ import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
+import { ThemeProvider } from '@ui5/webcomponents-react';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <App />
+     <ThemeProvider>
+      <App />
+     </ThemeProvider>
   </Provider>
 );
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from '../table/table';
 import ButtonTabBar from '../buttonTabBar/buttonTabBar';
-import Footer from '../footer/footer';
+import Footer from '../footer/mainFooter';
 
 export default function MainPage() {
     return (

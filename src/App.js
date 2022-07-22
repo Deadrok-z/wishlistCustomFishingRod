@@ -1,11 +1,11 @@
 import React from 'react';
-import './App.css';
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from "react-router-dom";
 import MainPage from './components/MainPage/MainPage';
+import NewRodPage from './components/NewRodPage/NewRodPage';
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
       <div className="App">
         <Routes>
           <Route exact path="/" element={<MainPage/>} />
-          <Route exact path="/newRod"/>
+          <Route path="/newRod" element={<NewRodPage/>}/>
         </Routes>
       </div>
     </Router>
