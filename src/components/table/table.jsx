@@ -8,12 +8,19 @@ import '../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.cs
 import { filterValueSelector } from '../../features/buttonTabBar/buttonTabBarSlice';
 import { useSelector } from 'react-redux';
 import { tableSelector } from '../../features/table/tableSlice';
+import { useNavigate } from "react-router-dom";
 
 
 export default function Table(props) {
   const table = useRef('table')
   const filterValue = useSelector(filterValueSelector)
   const dataRods = useSelector(tableSelector);
+  let navigate = useNavigate();
+  const options = {
+    onRowClick: function (row) {
+      navigate("../detailRod", { replace: true });
+    }
+  };
 
   useEffect(() => {
     const filterObj = filterValue !== 'All' ? { Type_ID: filterValue } : {}
@@ -38,7 +45,7 @@ export default function Table(props) {
 
   return (
     <div>
-      <BootstrapTable hover data={dataRods} ref={table}>
+      <BootstrapTable hover data={dataRods} ref={table} options={options}>
         <TableHeaderColumn isKey dataField='Name'>
           Name
         </TableHeaderColumn>

@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import MainPage from './components/MainPage/MainPage';
 import NewRodPage from './components/NewRodPage/NewRodPage';
+import DetailPage from './components/DetailPage/DetailPage';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Routes>
           <Route exact path="/" element={<MainPage/>} />
           <Route path="/newRod" element={<NewRodPage/>}/>
+          <Route path="/detailRod" element={<DetailPage/>}/>
         </Routes>
       </div>
     </Router>
