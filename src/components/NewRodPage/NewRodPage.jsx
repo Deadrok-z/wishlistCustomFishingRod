@@ -14,8 +14,10 @@ import Footer from '../footer/newRodFooter';
 import {
     countriesSelector,
     assemblyTypesSelector,
+    rodTypesSelector,
     fetchCountries,
-    fetchaAssemblyTypes
+    fetchaAssemblyTypes,
+    fetchaRodTypes,
 } from '../../features/newRodPage/newRodPageSlice';
 
 export default function NewRodPage() {
@@ -23,6 +25,7 @@ export default function NewRodPage() {
     const [rodName, setRodName] = useState('')
     const [rodCountries, setRodCountries] = useState('')
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('')
+    const [rodTypes, setRodTypes] = useState('')
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
@@ -36,9 +39,14 @@ export default function NewRodPage() {
         setRodAssemblyTypes(e.target.selectedItem)
         console.log(rodAssemblyTypes)
     }
+    const onChangeRodTypes = (e) => {
+        setRodTypes(e.target.selectedItem)
+        console.log(rodTypes)
+    }
 
     const countries = useSelector(countriesSelector)
     const assemblyTypes = useSelector(assemblyTypesSelector)
+    const rRodTypes = useSelector(rodTypesSelector)
 
     useEffect(() => {
         if (countries.length === 0) {
@@ -46,6 +54,9 @@ export default function NewRodPage() {
         }
         if (assemblyTypes.length === 0) {
             dispatch(fetchaAssemblyTypes())
+        }
+        if (rRodTypes.length === 0) {
+            dispatch(fetchaRodTypes())
         }
     }, [dispatch])
 
@@ -55,8 +66,9 @@ export default function NewRodPage() {
     const renderedAssemblyTypes = assemblyTypes.map(assemblyType => {
         return <Option key={assemblyType.ID}>{assemblyType.Text}</Option>
     })
-
-
+    const renderedRodTypes = rRodTypes.map(rRodType => {
+        return <Option key={rRodType.ID}>{rRodType.Text}</Option>
+    })
 
     return (
         <div>
@@ -79,8 +91,8 @@ export default function NewRodPage() {
                         </Select>
                     </FormItem>
                     <FormItem label="Fishing rod">
-                        <Select>
-                            {renderedCountries}
+                        <Select onChange={onChangeRodTypes}>
+                            {renderedRodTypes}
                         </Select>
                     </FormItem>
                     <FormItem label="Length">

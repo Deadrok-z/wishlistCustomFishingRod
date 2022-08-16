@@ -10,7 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tableSelector } from '../../features/table/tableSlice';
 import { useNavigate } from "react-router-dom";
 import { fetchRods } from "../../features/table/tableSlice";
-import { fetchCountries, fetchaAssemblyTypes, countriesSelector, assemblyTypesSelector } from '../../features/newRodPage/newRodPageSlice';
+import {
+  fetchCountries,
+  fetchaAssemblyTypes,
+  fetchaRodTypes,
+  countriesSelector,
+  assemblyTypesSelector,
+  rodTypesSelector,
+} from '../../features/newRodPage/newRodPageSlice';
 
 
 
@@ -18,6 +25,7 @@ export default function Table(props) {
   const table = useRef('table')
   const countries = useSelector(countriesSelector)
   const assemblyTypes = useSelector(assemblyTypesSelector)
+  const rodTypes = useSelector(rodTypesSelector)
   const filterValue = useSelector(filterValueSelector)
   const dataRods = useSelector(tableSelector);
   const dispatch = useDispatch();
@@ -34,12 +42,14 @@ export default function Table(props) {
   }, [filterValue])
 
   useEffect(() => {
-    
-    if(dataRods.length === 0  ) dispatch(fetchRods());
-    
+
+    if (dataRods.length === 0) dispatch(fetchRods());
+
     if (countries.length === 0) dispatch(fetchCountries());
 
     if (assemblyTypes.length === 0) dispatch(fetchaAssemblyTypes());
+
+    if (rodTypes.length === 0) dispatch(fetchaRodTypes());
   }, [dispatch])
 
   return (
