@@ -11,14 +11,14 @@ import {
 } from '@ui5/webcomponents-react';
 import Footer from '../footer/newRodFooter';
 
-export default function NewRodPage() {
+export default function DetailPage() {
     return (
         <div>
             <Form
                 style={{
                     alignItems: 'center'
                 }}
-                titleText="New Fishing Rod"
+                titleText="Detail Page"
             >
                 <FormGroup titleText="Your Fishing Rod">
                     <FormItem label="Name">
