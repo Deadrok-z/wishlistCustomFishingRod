@@ -6,15 +6,18 @@ import {
 import './css/Table.css';
 import '../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css'
 import { filterValueSelector } from '../../features/buttonTabBar/buttonTabBarSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { tableSelector } from '../../features/table/tableSlice';
 import { useNavigate } from "react-router-dom";
+import {fetchRods} from "../../features/table/tableSlice"
+
 
 
 export default function Table(props) {
   const table = useRef('table')
   const filterValue = useSelector(filterValueSelector)
   const dataRods = useSelector(tableSelector);
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   const options = {
     onRowClick: function (row) {
@@ -25,8 +28,7 @@ export default function Table(props) {
   useEffect(() => {
     const filterObj = filterValue !== 'All' ? { Type_ID: filterValue } : {}
     table.current.handleFilterData(filterObj);
-
-
+    dispatch(fetchRods());
     // fetch("browse/RodTypes", {
     //   method: "GET",
     //   headers: {
