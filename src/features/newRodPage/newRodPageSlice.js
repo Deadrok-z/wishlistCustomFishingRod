@@ -1,35 +1,48 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-    countries:[],
-    assemblyTypes:[],
-    rodTypes:[],
-    materialsRod:[],
-    materialsHandle:[],
-    reelSeat:[],
-    inserts:[]
+    countries: [],
+    assemblyTypes: [],
+    rodTypes: [],
+    materialsRod: [],
+    materialsHandle: [],
+    reelSeat: [],
+    inserts: []
 }
 
-export const fetchCountries = createAsyncThunk('countries/fetchCountries', async ()=>{
+export const fetchCountries = createAsyncThunk('countries/fetchCountries', async () => {
     const response = await fetch("browse/Countries", {
         method: "GET",
         headers: {
-          Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
-          "Content-Type": "application/json"
+            Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
+            "Content-Type": "application/json"
         }
     })
     const result = await response.json()
     return result.value
-    
+})
+
+export const fetchaAssemblyTypes = createAsyncThunk('countries/fetchaAssemblyTypes', async () => {
+    const response = await fetch("browse/AssemblyType", {
+        method: "GET",
+        headers: {
+            Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
+            "Content-Type": "application/json"
+        }
+    })
+    const result = await response.json()
+    return result.value
 })
 
 export const newRodPageSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {},
-    extraReducers(builder){
+    extraReducers(builder) {
         builder.addCase(fetchCountries.fulfilled, (state, action) => {
             state.countries.push(...action.payload)
+        }).addCase(fetchaAssemblyTypes.fulfilled, (state, action) => {
+            state.assemblyTypes.push(...action.payload)
         })
     }
 })
@@ -37,3 +50,4 @@ export const newRodPageSlice = createSlice({
 export default newRodPageSlice.reducer
 
 export const countriesSelector = (state) => state.data.countries
+export const assemblyTypesSelector = (state) => state.data.assemblyTypes

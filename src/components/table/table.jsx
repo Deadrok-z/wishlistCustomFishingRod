@@ -10,13 +10,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { tableSelector } from '../../features/table/tableSlice';
 import { useNavigate } from "react-router-dom";
 import { fetchRods } from "../../features/table/tableSlice";
-import { fetchCountries, countriesSelector } from '../../features/newRodPage/newRodPageSlice';
+import { fetchCountries, fetchaAssemblyTypes, countriesSelector, assemblyTypesSelector } from '../../features/newRodPage/newRodPageSlice';
 
 
 
 export default function Table(props) {
   const table = useRef('table')
   const countries = useSelector(countriesSelector)
+  const assemblyTypes = useSelector(assemblyTypesSelector)
   const filterValue = useSelector(filterValueSelector)
   const dataRods = useSelector(tableSelector);
   const dispatch = useDispatch();
@@ -30,17 +31,6 @@ export default function Table(props) {
   useEffect(() => {
     const filterObj = filterValue !== 'All' ? { Type_ID: filterValue } : {}
     table.current.handleFilterData(filterObj);
-    // fetch("browse/RodTypes", {
-    //   method: "GET",
-    //   headers: {
-    //     Authorization: "Basic YWxleDphbGV4",
-    //     "Content-Type":"application/json"
-    //   }
-    // }).then(
-    //   res => res.json()
-    //   ).then((res) => { 
-    //   console.log(res)
-    // },(error) => {console.log(error)})
   }, [filterValue])
 
   useEffect(() => {
@@ -48,6 +38,8 @@ export default function Table(props) {
     if(dataRods.length === 0  ) dispatch(fetchRods());
     
     if (countries.length === 0) dispatch(fetchCountries());
+
+    if (assemblyTypes.length === 0) dispatch(fetchaAssemblyTypes());
   }, [dispatch])
 
   return (

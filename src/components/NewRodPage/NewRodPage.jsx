@@ -11,32 +11,49 @@ import {
     RadioButton
 } from '@ui5/webcomponents-react';
 import Footer from '../footer/newRodFooter';
-import { countriesSelector, fetchCountries } from '../../features/newRodPage/newRodPageSlice';
+import {
+    countriesSelector,
+    assemblyTypesSelector,
+    fetchCountries,
+    fetchaAssemblyTypes
+} from '../../features/newRodPage/newRodPageSlice';
 
 export default function NewRodPage() {
     const dispatch = useDispatch();
     const [rodName, setRodName] = useState('')
     const [rodCountries, setRodCountries] = useState('')
+    const [rodAssemblyTypes, setRodAssemblyTypes] = useState('')
+
     const onEnterName = (e) => {
         setRodName(e.target.value)
         console.log(rodName)
     }
-
     const onChangeCountries = (e) => {
         setRodCountries(e.target.selectedItem)
         console.log(rodCountries)
     }
+    const onChangeAssemblyTypes = (e) => {
+        setRodAssemblyTypes(e.target.selectedItem)
+        console.log(rodAssemblyTypes)
+    }
+
+    const countries = useSelector(countriesSelector)
+    const assemblyTypes = useSelector(assemblyTypesSelector)
 
     useEffect(() => {
         if (countries.length === 0) {
-        dispatch(fetchCountries())
+            dispatch(fetchCountries())
+        }
+        if (assemblyTypes.length === 0) {
+            dispatch(fetchaAssemblyTypes())
         }
     }, [dispatch])
 
-    const countries = useSelector(countriesSelector)
-
     const renderedCountries = countries.map(countrie => {
         return <Option key={countrie.ID}>{countrie.Text}</Option>
+    })
+    const renderedAssemblyTypes = assemblyTypes.map(assemblyType => {
+        return <Option key={assemblyType.ID}>{assemblyType.Text}</Option>
     })
 
 
@@ -57,8 +74,8 @@ export default function NewRodPage() {
                         <Input />
                     </FormItem>
                     <FormItem label="Assembly Type">
-                        <Select onChange={onChangeCountries}>
-                            {renderedCountries}
+                        <Select onChange={onChangeAssemblyTypes}>
+                            {renderedAssemblyTypes}
                         </Select>
                     </FormItem>
                     <FormItem label="Fishing rod">
