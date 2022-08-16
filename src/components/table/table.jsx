@@ -9,12 +9,14 @@ import { filterValueSelector } from '../../features/buttonTabBar/buttonTabBarSli
 import { useDispatch, useSelector } from 'react-redux';
 import { tableSelector } from '../../features/table/tableSlice';
 import { useNavigate } from "react-router-dom";
-import {fetchRods} from "../../features/table/tableSlice"
+import { fetchRods } from "../../features/table/tableSlice";
+import { fetchCountries, countriesSelector } from '../../features/newRodPage/newRodPageSlice';
 
 
 
 export default function Table(props) {
   const table = useRef('table')
+  const countries = useSelector(countriesSelector)
   const filterValue = useSelector(filterValueSelector)
   const dataRods = useSelector(tableSelector);
   const dispatch = useDispatch();
@@ -28,7 +30,6 @@ export default function Table(props) {
   useEffect(() => {
     const filterObj = filterValue !== 'All' ? { Type_ID: filterValue } : {}
     table.current.handleFilterData(filterObj);
-    dispatch(fetchRods());
     // fetch("browse/RodTypes", {
     //   method: "GET",
     //   headers: {
@@ -40,10 +41,14 @@ export default function Table(props) {
     //   ).then((res) => { 
     //   console.log(res)
     // },(error) => {console.log(error)})
-
-
-
   }, [filterValue])
+
+  useEffect(() => {
+    
+    if(dataRods.length === 0  ) dispatch(fetchRods());
+    
+    if (countries.length === 0) dispatch(fetchCountries());
+  }, [dispatch])
 
   return (
     <div>

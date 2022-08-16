@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     Form,
     FormItem,
@@ -10,24 +11,36 @@ import {
     RadioButton
 } from '@ui5/webcomponents-react';
 import Footer from '../footer/newRodFooter';
-import { useState } from 'react';
-
-const onChange = (event) => {
-    console.log(event.detail.selectedOption.dataset.id);
-};
-
-const data = [
-    { id: 1, text: 'Option 1' },
-    { id: 2, text: 'Option 2' }
-];
+import { countriesSelector, fetchCountries } from '../../features/newRodPage/newRodPageSlice';
 
 export default function NewRodPage() {
-    const [rodName,setRodName] = useState('')
-    const onEnterName = (e)=>{
+    const dispatch = useDispatch();
+    const [rodName, setRodName] = useState('')
+    const [rodCountries, setRodCountries] = useState('')
+    const onEnterName = (e) => {
         setRodName(e.target.value)
         console.log(rodName)
     }
-    
+
+    const onChangeCountries = (e) => {
+        setRodCountries(e.target.selectedItem)
+        console.log(rodCountries)
+    }
+
+    useEffect(() => {
+        if (countries.length === 0) {
+        dispatch(fetchCountries())
+        }
+    }, [dispatch])
+
+    const countries = useSelector(countriesSelector)
+
+    const renderedCountries = countries.map(countrie => {
+        return <Option key={countrie.ID}>{countrie.Text}</Option>
+    })
+
+
+
     return (
         <div>
             <Form
@@ -38,31 +51,19 @@ export default function NewRodPage() {
             >
                 <FormGroup titleText="Your Fishing Rod">
                     <FormItem label="Name">
-                        <Input onInput={(e)=>onEnterName(e)} />
+                        <Input onInput={(e) => onEnterName(e)} />
                     </FormItem>
                     <FormItem label="Price">
                         <Input />
                     </FormItem>
                     <FormItem label="Assembly Type">
-                        <Select>
-                            <Option>
-                                Germany
-                            </Option>
-                            <Option>
-                                France
-                            </Option>
-                            <Option>
-                                Italy
-                            </Option>
+                        <Select onChange={onChangeCountries}>
+                            {renderedCountries}
                         </Select>
                     </FormItem>
                     <FormItem label="Fishing rod">
-                        <Select onChange={onChange}>
-                            {data.map((item) => (
-                                <Option key={item.id} data-id={item.id}>
-                                    {item.text}
-                                </Option>
-                            ))}
+                        <Select>
+                            {renderedCountries}
                         </Select>
                     </FormItem>
                     <FormItem label="Length">
@@ -100,7 +101,7 @@ export default function NewRodPage() {
                     <FormItem label="Max fishing rod test(gram)">
                         <Input />
                     </FormItem>
-                    <FormItem label="Assembly Type">
+                    <FormItem label="Rod material">
                         <Select>
                             <Option>
                                 Germany
@@ -113,7 +114,7 @@ export default function NewRodPage() {
                             </Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="Assembly Type">
+                    <FormItem label="Reel seat">
                         <Select>
                             <Option>
                                 Germany
@@ -126,7 +127,7 @@ export default function NewRodPage() {
                             </Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="Assembly Type">
+                    <FormItem label="Rod handle material">
                         <Select>
                             <Option>
                                 Germany
@@ -139,17 +140,9 @@ export default function NewRodPage() {
                             </Option>
                         </Select>
                     </FormItem>
-                    <FormItem label="Assembly Type">
-                        <Select>
-                            <Option>
-                                Germany
-                            </Option>
-                            <Option>
-                                France
-                            </Option>
-                            <Option>
-                                Italy
-                            </Option>
+                    <FormItem label="Made in">
+                        <Select onChange={onChangeCountries}>
+                            {renderedCountries}
                         </Select>
                     </FormItem>
                     <FormItem label="Weight fishing rod(gram)">
