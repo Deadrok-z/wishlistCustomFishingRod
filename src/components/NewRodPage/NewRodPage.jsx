@@ -10,8 +10,24 @@ import {
     RadioButton
 } from '@ui5/webcomponents-react';
 import Footer from '../footer/newRodFooter';
+import { useState } from 'react';
+
+const onChange = (event) => {
+    console.log(event.detail.selectedOption.dataset.id);
+};
+
+const data = [
+    { id: 1, text: 'Option 1' },
+    { id: 2, text: 'Option 2' }
+];
 
 export default function NewRodPage() {
+    const [rodName,setRodName] = useState('')
+    const onEnterName = (e)=>{
+        setRodName(e.target.value)
+        console.log(rodName)
+    }
+    
     return (
         <div>
             <Form
@@ -22,7 +38,7 @@ export default function NewRodPage() {
             >
                 <FormGroup titleText="Your Fishing Rod">
                     <FormItem label="Name">
-                        <Input />
+                        <Input onInput={(e)=>onEnterName(e)} />
                     </FormItem>
                     <FormItem label="Price">
                         <Input />
@@ -41,16 +57,12 @@ export default function NewRodPage() {
                         </Select>
                     </FormItem>
                     <FormItem label="Fishing rod">
-                        <Select>
-                            <Option>
-                                Germany
-                            </Option>
-                            <Option>
-                                France
-                            </Option>
-                            <Option>
-                                Italy
-                            </Option>
+                        <Select onChange={onChange}>
+                            {data.map((item) => (
+                                <Option key={item.id} data-id={item.id}>
+                                    {item.text}
+                                </Option>
+                            ))}
                         </Select>
                     </FormItem>
                     <FormItem label="Length">
