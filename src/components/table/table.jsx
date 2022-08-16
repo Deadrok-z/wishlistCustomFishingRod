@@ -18,6 +18,7 @@ import {
   assemblyTypesSelector,
   rodTypesSelector,
 } from '../../features/newRodPage/newRodPageSlice';
+import { Routings }  from '../../Routes/routes';
 
 
 
@@ -32,7 +33,7 @@ export default function Table(props) {
   let navigate = useNavigate();
   const options = {
     onRowClick: function (row) {
-      navigate("../detailRod", { replace: true });
+      navigate(Routings.DETAIL_PAGE, { replace: true });
     }
   };
 
