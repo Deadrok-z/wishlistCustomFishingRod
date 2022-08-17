@@ -147,12 +147,14 @@ export default function NewRodPage() {
                             {renderedRodTypes}
                         </Select>
                     </FormItem>
-                    <FormItem label="Length">
+                    <FormItem label="Length(sm)">
                         <Input onInput={(e) => onEnterLength(e)} value={rodLength}/>
                     </FormItem>
                     <FormItem>
                         <Slider
-                            max={10000}
+                            labelInterval={100}
+                            showTickmarks
+                            max={1000}
                             onChange={onEnterLength}
                             onInput={onEnterLength}
                             value={rodLength}
