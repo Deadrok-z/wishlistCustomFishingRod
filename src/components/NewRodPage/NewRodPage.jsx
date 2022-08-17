@@ -33,6 +33,7 @@ export default function NewRodPage() {
     const [rodName, setRodName] = useState('');
     const [rodPrice, setRodPrice] = useState(0);
     const [rodLength, setRodLength] = useState(0);
+    const [rodLengthKnee, setRodLengthKnee] = useState(0);
     const [rodCountries, setRodCountries] = useState('');
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
     const [rodTypes, setRodTypes] = useState('');
@@ -48,6 +49,10 @@ export default function NewRodPage() {
     const onEnterPrice = (e) => {
         setRodPrice(e.target.value)
         console.log(rodPrice)
+    };
+    const onEnterLengthKnee = (e) => {
+        setRodLengthKnee(e.target.value)
+        console.log(rodLengthKnee)
     };
     const onEnterLength = (e) => {
         setRodLength(e.target.value)
@@ -161,12 +166,16 @@ export default function NewRodPage() {
                         />
                     </FormItem>
                     <FormItem label="Length Knee(sm)">
-                        <Input />
+                        <Input onInput={(e) => onEnterLengthKnee(e)} value={rodLengthKnee}/>
                     </FormItem>
                     <FormItem>
                         <Slider
-                            onChange={function noRefCheck() { }}
-                            onInput={function noRefCheck() { }}
+                            labelInterval={50}
+                            showTickmarks
+                            max={150}
+                            onChange={onEnterLengthKnee}
+                            onInput={onEnterLengthKnee}
+                            value={rodLengthKnee}
                         />
                     </FormItem>
                     <FormItem label="Fishing rod knee">
