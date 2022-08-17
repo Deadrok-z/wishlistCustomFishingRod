@@ -30,47 +30,52 @@ import {
 
 export default function NewRodPage() {
     const dispatch = useDispatch();
-    const [rodName, setRodName] = useState('')
-    const [rodCountries, setRodCountries] = useState('')
-    const [rodAssemblyTypes, setRodAssemblyTypes] = useState('')
-    const [rodTypes, setRodTypes] = useState('')
-    const [rodMaterials, setRodMaterials] = useState('')
-    const [rodHandleMaterials, setRodHandleMaterials] = useState('')
-    const [rodReelSeat, setRodReelSeat] = useState('')
-    const [rodInserts, setRodInserts] = useState('')
+    const [rodName, setRodName] = useState('');
+    const [rodPrice, setRodPrice] = useState(0);
+    const [rodCountries, setRodCountries] = useState('');
+    const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
+    const [rodTypes, setRodTypes] = useState('');
+    const [rodMaterials, setRodMaterials] = useState('');
+    const [rodHandleMaterials, setRodHandleMaterials] = useState('');
+    const [rodReelSeat, setRodReelSeat] = useState('');
+    const [rodInserts, setRodInserts] = useState('');
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
         console.log(rodName)
-    }
+    };
+    const onEnterPrice = (e) => {
+        setRodPrice(e.target.value)
+        console.log(rodPrice)
+    };
     const onChangeCountries = (e) => {
         setRodCountries(e.target.selectedItem)
         console.log(rodCountries)
-    }
+    };
     const onChangeAssemblyTypes = (e) => {
         setRodAssemblyTypes(e.target.selectedItem)
         console.log(rodAssemblyTypes)
-    }
+    };
     const onChangeRodTypes = (e) => {
         setRodTypes(e.target.selectedItem)
         console.log(rodTypes)
-    }
+    };
     const onChangeRodMaterials = (e) => {
         setRodMaterials(e.target.selectedItem)
         console.log(rodMaterials)
-    }
+    };
     const onChangeRodHandleMaterials = (e) => {
         setRodHandleMaterials(e.target.selectedItem)
         console.log(rodHandleMaterials)
-    }
+    };
     const onChangeRodReelSeat = (e) => {
         setRodReelSeat(e.target.selectedItem)
         console.log(rodReelSeat)
-    }
+    };
     const onChangeRodInserts = (e) => {
         setRodInserts(e.target.text)
         console.log(rodInserts)
-    }
+    };
 
     const countries = useSelector(countriesSelector);
     const assemblyTypes = useSelector(assemblyTypesSelector);
@@ -125,7 +130,7 @@ export default function NewRodPage() {
                         <Input onInput={(e) => onEnterName(e)} />
                     </FormItem>
                     <FormItem label="Price">
-                        <Input />
+                        <Input onInput={(e) => onEnterPrice(e)}/>
                     </FormItem>
                     <FormItem label="Assembly Type">
                         <Select onChange={onChangeAssemblyTypes}>
