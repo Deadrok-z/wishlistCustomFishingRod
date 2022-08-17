@@ -32,6 +32,7 @@ export default function NewRodPage() {
     const dispatch = useDispatch();
     const [rodName, setRodName] = useState('');
     const [rodPrice, setRodPrice] = useState(0);
+    const [rodLength, setRodLength] = useState(0);
     const [rodCountries, setRodCountries] = useState('');
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
     const [rodTypes, setRodTypes] = useState('');
@@ -47,6 +48,10 @@ export default function NewRodPage() {
     const onEnterPrice = (e) => {
         setRodPrice(e.target.value)
         console.log(rodPrice)
+    };
+    const onEnterLength = (e) => {
+        setRodLength(e.target.value)
+        console.log(rodLength)
     };
     const onChangeCountries = (e) => {
         setRodCountries(e.target.selectedItem)
@@ -143,12 +148,14 @@ export default function NewRodPage() {
                         </Select>
                     </FormItem>
                     <FormItem label="Length">
-                        <Input />
+                        <Input onInput={(e) => onEnterLength(e)} value={rodLength}/>
                     </FormItem>
                     <FormItem>
                         <Slider
-                            onChange={function noRefCheck() { }}
-                            onInput={function noRefCheck() { }}
+                            max={10000}
+                            onChange={onEnterLength}
+                            onInput={onEnterLength}
+                            value={rodLength}
                         />
                     </FormItem>
                     <FormItem label="Length Knee(sm)">
