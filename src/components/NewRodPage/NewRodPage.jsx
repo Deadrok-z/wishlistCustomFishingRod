@@ -18,12 +18,14 @@ import {
     materialsRodSelector,
     materialsHandleSelector,
     reelSeatSelector,
+    insertsSelector,
     fetchCountries,
     fetchaAssemblyTypes,
     fetchaRodTypes,
     fetchaMaterialsRod,
     fetchaMaterialsHandle,
     fetchaReelSeat,
+    fetchaInserts,
 } from '../../features/newRodPage/newRodPageSlice';
 
 export default function NewRodPage() {
@@ -35,6 +37,7 @@ export default function NewRodPage() {
     const [rodMaterials, setRodMaterials] = useState('')
     const [rodHandleMaterials, setRodHandleMaterials] = useState('')
     const [rodReelSeat, setRodReelSeat] = useState('')
+    const [rodInserts, setRodInserts] = useState('')
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
@@ -64,6 +67,10 @@ export default function NewRodPage() {
         setRodReelSeat(e.target.selectedItem)
         console.log(rodReelSeat)
     }
+    const onChangeRodInserts = (e) => {
+        setRodInserts(e.target.text)
+        console.log(rodInserts)
+    }
 
     const countries = useSelector(countriesSelector);
     const assemblyTypes = useSelector(assemblyTypesSelector);
@@ -71,6 +78,7 @@ export default function NewRodPage() {
     const materialsRod = useSelector(materialsRodSelector);
     const materialsHandle = useSelector(materialsHandleSelector);
     const reelSeat = useSelector(reelSeatSelector);
+    const inserts = useSelector(insertsSelector);
 
     useEffect(() => {
         if (countries.length === 0) dispatch(fetchCountries());
@@ -79,6 +87,7 @@ export default function NewRodPage() {
         if (materialsRod.length === 0) dispatch(fetchaMaterialsRod());
         if (materialsHandle.length === 0) dispatch(fetchaMaterialsHandle());
         if (reelSeat.length === 0) dispatch(fetchaReelSeat());
+        if (inserts.length === 0) dispatch(fetchaInserts());
     }, [dispatch])
 
     const renderedCountries = countries.map(countrie => {
@@ -98,6 +107,9 @@ export default function NewRodPage() {
     })
     const renderedReelSeat = reelSeat.map(reelSeat => {
         return <Option key={reelSeat.ID}>{reelSeat.Text}</Option>
+    })
+    const renderedInsertsButtons = inserts.map(insert => {
+        return <RadioButton key={insert.ID} name="GroupA" text={insert.Text} onChange={onChangeRodInserts}/>
     })
 
     return (
@@ -150,9 +162,7 @@ export default function NewRodPage() {
                         <Input />
                     </FormItem>
                     <FormItem label="Lead ring inserts">
-                        <RadioButton name="GroupA" text="Option A" />
-                        <RadioButton name="GroupA" text="Option B" />
-                        <RadioButton name="GroupA" text="Option C" />
+                        {renderedInsertsButtons}
                     </FormItem>
                     <FormItem label="Min fishing rod test(gram)">
                         <Input />
@@ -167,7 +177,7 @@ export default function NewRodPage() {
                     </FormItem>
                     <FormItem label="Reel seat">
                         <Select onChange={onChangeRodReelSeat}>
-                           {renderedReelSeat}
+                            {renderedReelSeat}
                         </Select>
                     </FormItem>
                     <FormItem label="Rod handle material">

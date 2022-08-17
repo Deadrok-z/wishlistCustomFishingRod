@@ -17,12 +17,14 @@ import {
   fetchaMaterialsRod,
   fetchaMaterialsHandle,
   fetchaReelSeat,
+  fetchaInserts,
   countriesSelector,
   assemblyTypesSelector,
   rodTypesSelector,
   materialsRodSelector,
   materialsHandleSelector,
   reelSeatSelector,
+  insertsSelector,
 } from '../../features/newRodPage/newRodPageSlice';
 import { Routings } from '../../Routes/routes';
 
@@ -36,6 +38,7 @@ export default function Table(props) {
   const materialsRod = useSelector(materialsRodSelector);
   const materialsHandle = useSelector(materialsHandleSelector);
   const reelSeat = useSelector(reelSeatSelector);
+  const inserts = useSelector(insertsSelector);
   
   const filterValue = useSelector(filterValueSelector);
   const dataRods = useSelector(tableSelector);
@@ -60,6 +63,7 @@ export default function Table(props) {
     if (materialsRod.length === 0) dispatch(fetchaMaterialsRod());
     if (materialsHandle.length === 0) dispatch(fetchaMaterialsHandle());
     if (reelSeat.length === 0) dispatch(fetchaReelSeat());
+    if (inserts.length === 0) dispatch(fetchaInserts());
   }, [dispatch])
 
   return (

@@ -82,6 +82,18 @@ export const fetchaReelSeat = createAsyncThunk('reelSeat/fetchaReelSeat', async 
     return result.value
 })
 
+export const fetchaInserts = createAsyncThunk('inserts/fetchaInserts', async () => {
+    const response = await fetch("browse/Inserts", {
+        method: "GET",
+        headers: {
+            Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
+            "Content-Type": "application/json"
+        }
+    })
+    const result = await response.json()
+    return result.value
+})
+
 export const newRodPageSlice = createSlice({
     name: 'data',
     initialState,
@@ -99,6 +111,8 @@ export const newRodPageSlice = createSlice({
             state.materialsHandle.push(...action.payload)
         }).addCase(fetchaReelSeat.fulfilled, (state, action) => {
             state.reelSeat.push(...action.payload)
+        }).addCase(fetchaInserts.fulfilled, (state, action) => {
+            state.inserts.push(...action.payload)
         })
     }
 })
@@ -111,3 +125,4 @@ export const rodTypesSelector = (state) => state.data.rodTypes
 export const materialsRodSelector = (state) => state.data.materialsRod
 export const materialsHandleSelector = (state) => state.data.materialsHandle
 export const reelSeatSelector = (state) => state.data.materialsHandle
+export const insertsSelector = (state) => state.data.inserts
