@@ -16,10 +16,12 @@ import {
     assemblyTypesSelector,
     rodTypesSelector,
     materialsRodSelector,
+    materialsHandleSelector,
     fetchCountries,
     fetchaAssemblyTypes,
     fetchaRodTypes,
     fetchaMaterialsRod,
+    fetchaMaterialsHandle,
 } from '../../features/newRodPage/newRodPageSlice';
 
 export default function NewRodPage() {
@@ -29,6 +31,7 @@ export default function NewRodPage() {
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('')
     const [rodTypes, setRodTypes] = useState('')
     const [rodMaterials, setRodMaterials] = useState('')
+    const [rodHandleMaterials, setRodHandleMaterials] = useState('')
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
@@ -50,25 +53,24 @@ export default function NewRodPage() {
         setRodMaterials(e.target.selectedItem)
         console.log(rodMaterials)
     }
+    const onChangeRodHandleMaterials = (e) => {
+        setRodHandleMaterials(e.target.selectedItem)
+        console.log(rodHandleMaterials)
+    }
+
 
     const countries = useSelector(countriesSelector)
     const assemblyTypes = useSelector(assemblyTypesSelector)
     const rRodTypes = useSelector(rodTypesSelector)
     const materialsRod = useSelector(materialsRodSelector)
+    const materialsHandle = useSelector(materialsHandleSelector)
 
     useEffect(() => {
-        if (countries.length === 0) {
-            dispatch(fetchCountries())
-        }
-        if (assemblyTypes.length === 0) {
-            dispatch(fetchaAssemblyTypes())
-        }
-        if (rRodTypes.length === 0) {
-            dispatch(fetchaRodTypes())
-        }
-        if (materialsRod.length === 0) {
-            dispatch(fetchaMaterialsRod())
-        }
+        if (countries.length === 0) dispatch(fetchCountries());
+        if (assemblyTypes.length === 0) dispatch(fetchaAssemblyTypes());
+        if (rRodTypes.length === 0) dispatch(fetchaRodTypes());
+        if (materialsRod.length === 0) dispatch(fetchaMaterialsRod());
+        if (materialsHandle.length === 0) dispatch(fetchaMaterialsHandle());
     }, [dispatch])
 
     const renderedCountries = countries.map(countrie => {
@@ -82,6 +84,9 @@ export default function NewRodPage() {
     })
     const renderedMaterialsRod = materialsRod.map(materialRod => {
         return <Option key={materialRod.ID}>{materialRod.Text}</Option>
+    })
+    const renderedMaterialsHandle = materialsHandle.map(materialHandle => {
+        return <Option key={materialHandle.ID}>{materialHandle.Text}</Option>
     })
 
     return (
@@ -163,16 +168,8 @@ export default function NewRodPage() {
                         </Select>
                     </FormItem>
                     <FormItem label="Rod handle material">
-                        <Select>
-                            <Option>
-                                Germany
-                            </Option>
-                            <Option>
-                                France
-                            </Option>
-                            <Option>
-                                Italy
-                            </Option>
+                        <Select onChange={onChangeRodHandleMaterials}>
+                            {renderedMaterialsHandle}
                         </Select>
                     </FormItem>
                     <FormItem label="Made in">
