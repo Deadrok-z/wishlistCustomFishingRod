@@ -14,20 +14,23 @@ import {
   fetchCountries,
   fetchaAssemblyTypes,
   fetchaRodTypes,
+  fetchaMaterialsRod,
   countriesSelector,
   assemblyTypesSelector,
   rodTypesSelector,
+  materialsRodSelector,
 } from '../../features/newRodPage/newRodPageSlice';
 import { Routings }  from '../../Routes/routes';
 
 
 
 export default function Table(props) {
-  const table = useRef('table')
-  const countries = useSelector(countriesSelector)
-  const assemblyTypes = useSelector(assemblyTypesSelector)
-  const rodTypes = useSelector(rodTypesSelector)
-  const filterValue = useSelector(filterValueSelector)
+  const table = useRef('table');
+  const countries = useSelector(countriesSelector);
+  const assemblyTypes = useSelector(assemblyTypesSelector);
+  const rodTypes = useSelector(rodTypesSelector);
+  const materialsRod = useSelector(materialsRodSelector);
+  const filterValue = useSelector(filterValueSelector);
   const dataRods = useSelector(tableSelector);
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -51,6 +54,8 @@ export default function Table(props) {
     if (assemblyTypes.length === 0) dispatch(fetchaAssemblyTypes());
 
     if (rodTypes.length === 0) dispatch(fetchaRodTypes());
+
+    if (materialsRod.length === 0) dispatch(fetchaMaterialsRod());
   }, [dispatch])
 
   return (

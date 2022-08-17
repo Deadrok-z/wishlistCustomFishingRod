@@ -46,6 +46,19 @@ export const fetchaRodTypes = createAsyncThunk('rodTypes/fetchaRodTypes', async 
     return result.value
 })
 
+export const fetchaMaterialsRod = createAsyncThunk('materialsRod/fetchaMaterialsRod', async () => {
+    const response = await fetch("browse/MaterialRod", {
+        method: "GET",
+        headers: {
+            Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
+            "Content-Type": "application/json"
+        }
+    })
+    const result = await response.json()
+    return result.value
+})
+
+
 export const newRodPageSlice = createSlice({
     name: 'data',
     initialState,
@@ -57,6 +70,8 @@ export const newRodPageSlice = createSlice({
             state.assemblyTypes.push(...action.payload)
         }).addCase(fetchaRodTypes.fulfilled, (state, action) => {
             state.rodTypes.push(...action.payload)
+        }).addCase(fetchaMaterialsRod.fulfilled, (state, action) => {
+            state.materialsRod.push(...action.payload)
         })
     }
 })
@@ -66,3 +81,4 @@ export default newRodPageSlice.reducer
 export const countriesSelector = (state) => state.data.countries
 export const assemblyTypesSelector = (state) => state.data.assemblyTypes
 export const rodTypesSelector = (state) => state.data.rodTypes
+export const materialsRodSelector = (state) => state.data.materialsRod

@@ -15,9 +15,11 @@ import {
     countriesSelector,
     assemblyTypesSelector,
     rodTypesSelector,
+    materialsRodSelector,
     fetchCountries,
     fetchaAssemblyTypes,
     fetchaRodTypes,
+    fetchaMaterialsRod,
 } from '../../features/newRodPage/newRodPageSlice';
 
 export default function NewRodPage() {
@@ -26,6 +28,7 @@ export default function NewRodPage() {
     const [rodCountries, setRodCountries] = useState('')
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('')
     const [rodTypes, setRodTypes] = useState('')
+    const [rodMaterials, setRodMaterials] = useState('')
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
@@ -43,10 +46,15 @@ export default function NewRodPage() {
         setRodTypes(e.target.selectedItem)
         console.log(rodTypes)
     }
+    const onChangeRodMaterials = (e) => {
+        setRodMaterials(e.target.selectedItem)
+        console.log(rodMaterials)
+    }
 
     const countries = useSelector(countriesSelector)
     const assemblyTypes = useSelector(assemblyTypesSelector)
     const rRodTypes = useSelector(rodTypesSelector)
+    const materialsRod = useSelector(materialsRodSelector)
 
     useEffect(() => {
         if (countries.length === 0) {
@@ -58,6 +66,9 @@ export default function NewRodPage() {
         if (rRodTypes.length === 0) {
             dispatch(fetchaRodTypes())
         }
+        if (materialsRod.length === 0) {
+            dispatch(fetchaMaterialsRod())
+        }
     }, [dispatch])
 
     const renderedCountries = countries.map(countrie => {
@@ -68,6 +79,9 @@ export default function NewRodPage() {
     })
     const renderedRodTypes = rRodTypes.map(rRodType => {
         return <Option key={rRodType.ID}>{rRodType.Text}</Option>
+    })
+    const renderedMaterialsRod = materialsRod.map(materialRod => {
+        return <Option key={materialRod.ID}>{materialRod.Text}</Option>
     })
 
     return (
@@ -131,16 +145,8 @@ export default function NewRodPage() {
                         <Input />
                     </FormItem>
                     <FormItem label="Rod material">
-                        <Select>
-                            <Option>
-                                Germany
-                            </Option>
-                            <Option>
-                                France
-                            </Option>
-                            <Option>
-                                Italy
-                            </Option>
+                        <Select onChange={onChangeRodMaterials}>
+                            {renderedMaterialsRod}
                         </Select>
                     </FormItem>
                     <FormItem label="Reel seat">
