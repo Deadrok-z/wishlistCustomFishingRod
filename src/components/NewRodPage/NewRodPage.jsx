@@ -37,6 +37,9 @@ export default function NewRodPage() {
     const [rodKneeHandleLength, setRodKneeHandleLength] = useState(0);
     const [rodNumberKnee, setRodNumberKnee] = useState(0);
     const [rodNumberRings, setRodNumberRings] = useState(0);
+    const [rodMinTest, setRodMinTest] = useState(0);
+    const [rodMaxTest, setRodMaxTest] = useState(0);
+    const [rodWeight, setRodWeight] = useState(0);
     const [rodCountries, setRodCountries] = useState('');
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
     const [rodTypes, setRodTypes] = useState('');
@@ -85,6 +88,18 @@ export default function NewRodPage() {
         const n2 = ((d - 2 * a) - Math.sqrt(D)) / (2 * d);
         setRodNumberRings(Math.ceil(n1 < 0 ? n2 : n1));
         console.log(rodNumberRings)
+    };
+    const onEnterMinTest = (e) => {
+        setRodMinTest(e.target.value)
+        console.log(rodMinTest)
+    };
+    const onEnterMaxTest = (e) => {
+        setRodMaxTest(e.target.value)
+        console.log(rodMaxTest)
+    };
+    const onEnterWeight = (e) => {
+        setRodWeight(e.target.value)
+        console.log(rodWeight)
     };
     const onChangeCountries = (e) => {
         setRodCountries(e.target.selectedItem)
@@ -232,10 +247,10 @@ export default function NewRodPage() {
                         {renderedInsertsButtons}
                     </FormItem>
                     <FormItem label="Min fishing rod test(gram)">
-                        <Input />
+                        <Input value={rodMinTest} onInput={(e) => onEnterMinTest(e)}/>
                     </FormItem>
                     <FormItem label="Max fishing rod test(gram)">
-                        <Input />
+                        <Input value={rodMaxTest} onInput={(e) => onEnterMaxTest(e)}/>
                     </FormItem>
                     <FormItem label="Rod material">
                         <Select onChange={onChangeRodMaterials}>
@@ -258,7 +273,7 @@ export default function NewRodPage() {
                         </Select>
                     </FormItem>
                     <FormItem label="Weight fishing rod(gram)">
-                        <Input />
+                        <Input value={rodWeight} onInput={(e) => onEnterWeight(e)}/>
                     </FormItem>
                 </FormGroup>
             </Form>
