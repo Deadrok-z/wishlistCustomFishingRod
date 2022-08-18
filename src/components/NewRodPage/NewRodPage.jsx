@@ -33,7 +33,7 @@ export default function NewRodPage() {
     const [rodName, setRodName] = useState('');
     const [rodPrice, setRodPrice] = useState(0);
     const [rodLength, setRodLength] = useState(0);
-    const [rodLengthKnee, setRodLengthKnee] = useState(0);
+    const [rodLengthKnee, setRodLengthKnee] = useState(10);
     const [rodNumberKnee, setRodNumberKnee] = useState(0);
     const [rodCountries, setRodCountries] = useState('');
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
