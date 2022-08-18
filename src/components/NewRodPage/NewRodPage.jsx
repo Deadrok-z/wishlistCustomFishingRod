@@ -32,9 +32,11 @@ export default function NewRodPage() {
     const dispatch = useDispatch();
     const [rodName, setRodName] = useState('');
     const [rodPrice, setRodPrice] = useState(0);
-    const [rodLength, setRodLength] = useState(0);
+    const [rodLength, setRodLength] = useState(50);
     const [rodLengthKnee, setRodLengthKnee] = useState(10);
+    const [rodKneeHandleLength, setRodKneeHandleLength] = useState(0);
     const [rodNumberKnee, setRodNumberKnee] = useState(0);
+    const [rodNumberRings, setRodNumberRings] = useState(0);
     const [rodCountries, setRodCountries] = useState('');
     const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
     const [rodTypes, setRodTypes] = useState('');
@@ -43,9 +45,10 @@ export default function NewRodPage() {
     const [rodReelSeat, setRodReelSeat] = useState('');
     const [rodInserts, setRodInserts] = useState('');
 
-    useEffect(()=>{
-        onСalculateNumberKnee(rodLength,rodLengthKnee)
-    },[rodLength,rodLengthKnee])
+    useEffect(() => {
+        onСalculateNumberKnee(rodLength, rodLengthKnee);
+        onСalculateNumberRings(rodLength, rodKneeHandleLength);
+    }, [rodLength, rodLengthKnee, rodKneeHandleLength])
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
@@ -57,16 +60,31 @@ export default function NewRodPage() {
     };
     const onEnterLength = (e) => {
         setRodLength(e.target.value)
-        
+
         console.log(rodLength)
     };
     const onEnterLengthKnee = (e) => {
         setRodLengthKnee(e.target.value)
         console.log(rodLengthKnee)
     };
+    const onEnterKneeHandleLength = (e) => {
+        setRodKneeHandleLength(e.target.value)
+        console.log(rodKneeHandleLength)
+    };
     const onСalculateNumberKnee = (rodLength, rodLengthKnee) => {
-        setRodNumberKnee(Math.ceil((Number(rodLength))/(Number(rodLengthKnee)-5)))
+        setRodNumberKnee(Math.ceil((Number(rodLength)) / (Number(rodLengthKnee) - 5)))
         console.log(rodNumberKnee)
+    };
+    const onСalculateNumberRings = (rodLength, rodKneeHandleLength) => {
+        const d = 2.5;
+        const a = 5;
+        const l = rodKneeHandleLength;
+        const L = rodLength;
+        const D = (2 * a - d) ^ 2 + 4 * d * 2 * (L - l);
+        const n1 = ((d - 2 * a) + Math.sqrt(D)) / (2 * d);
+        const n2 = ((d - 2 * a) - Math.sqrt(D)) / (2 * d);
+        setRodNumberRings(Math.ceil(n1 < 0 ? n2 : n1));
+        console.log(rodNumberRings)
     };
     const onChangeCountries = (e) => {
         setRodCountries(e.target.selectedItem)
@@ -134,7 +152,7 @@ export default function NewRodPage() {
         return <Option key={reelSeat.ID}>{reelSeat.Text}</Option>
     })
     const renderedInsertsButtons = inserts.map(insert => {
-        return <RadioButton checked key={insert.ID} name="GroupA" text={insert.Text} onChange={onChangeRodInserts}/>
+        return <RadioButton checked key={insert.ID} name="GroupA" text={insert.Text} onChange={onChangeRodInserts} />
     })
 
     return (
@@ -150,7 +168,7 @@ export default function NewRodPage() {
                         <Input onInput={(e) => onEnterName(e)} />
                     </FormItem>
                     <FormItem label="Price">
-                        <Input onInput={(e) => onEnterPrice(e)}/>
+                        <Input onInput={(e) => onEnterPrice(e)} />
                     </FormItem>
                     <FormItem label="Assembly Type">
                         <Select onChange={onChangeAssemblyTypes}>
@@ -163,12 +181,13 @@ export default function NewRodPage() {
                         </Select>
                     </FormItem>
                     <FormItem label="Length(sm)">
-                        <Input onInput={(e) => onEnterLength(e)} value={rodLength}/>
+                        <Input onInput={(e) => onEnterLength(e)} value={rodLength} />
                     </FormItem>
                     <FormItem>
                         <Slider
-                            labelInterval={100}
+                            labelInterval={1}
                             showTickmarks
+                            min={50}
                             max={1000}
                             onChange={onEnterLength}
                             onInput={onEnterLength}
@@ -176,24 +195,38 @@ export default function NewRodPage() {
                         />
                     </FormItem>
                     <FormItem label="Length Knee(sm)">
-                        <Input onInput={(e) => onEnterLengthKnee(e)} value={rodLengthKnee}/>
+                        <Input onInput={(e) => onEnterLengthKnee(e)} value={rodLengthKnee} />
                     </FormItem>
                     <FormItem>
                         <Slider
-                            labelInterval={10}
+                            labelInterval={1}
                             showTickmarks
                             min={10}
-                            max={150}
+                            max={rodLength}
                             onChange={onEnterLengthKnee}
                             onInput={onEnterLengthKnee}
                             value={rodLengthKnee}
                         />
                     </FormItem>
+                    <FormItem label="Knee Handle Length(sm)">
+                        <Input onInput={(e) => onEnterLengthKnee(e)} value={rodKneeHandleLength} />
+                    </FormItem>
+                    <FormItem>
+                        <Slider
+                            labelInterval={1}
+                            showTickmarks
+                            min={0}
+                            max={rodLengthKnee}
+                            onChange={onEnterKneeHandleLength}
+                            onInput={onEnterKneeHandleLength}
+                            value={rodKneeHandleLength}
+                        />
+                    </FormItem>
                     <FormItem label="Number of rod knees">
-                        <Input disabled value={rodNumberKnee}/>
+                        <Input disabled value={rodNumberKnee} />
                     </FormItem>
                     <FormItem label="Number of fishing rod rings">
-                        <Input disabled/>
+                        <Input disabled value={rodNumberRings} />
                     </FormItem>
                     <FormItem label="Lead ring inserts">
                         {renderedInsertsButtons}
