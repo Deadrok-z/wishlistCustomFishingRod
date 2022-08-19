@@ -116,16 +116,16 @@ export default function NewRodPage() {
         console.log(rodTypes)
     };
     const onChooseMaximumLength = (rodTypes) => {
-        if (rodTypes=="Feeder"){
+        if (rodTypes == "Feeder") {
             setRodMaximumLength(600);
         }
-        if (rodTypes=="Spinning"){
+        if (rodTypes == "Spinning") {
             setRodMaximumLength(300);
         }
-        if (rodTypes=="Pole rod"){
+        if (rodTypes == "Pole rod") {
             setRodMaximumLength(2000);
         }
-        if (rodTypes=="Fishing rod"){
+        if (rodTypes == "Fishing rod") {
             setRodMaximumLength(1000);
         }
     };
@@ -189,8 +189,8 @@ export default function NewRodPage() {
     return (
         <>
             <div style={{
-                        marginBottom : "100px"
-                    }}>
+                marginBottom: "100px"
+            }}>
                 <Form
                     style={{
                         alignItems: 'center'
@@ -199,25 +199,25 @@ export default function NewRodPage() {
                 >
                     <FormGroup titleText="Your Fishing Rod">
                         <FormItem label="Name">
-                            <Input onInput={(e) => onEnterName(e)} />
+                            <Input onInput={(e) => onEnterName(e)} type="Text" placeholder="Enter Name" />
                         </FormItem>
                         <FormItem label="Price">
-                            <Input onInput={(e) => onEnterPrice(e)} type="Number"/>
+                            <Input onInput={(e) => onEnterPrice(e)} type="Number" placeholder="Enter Price" />
                         </FormItem>
                         <FormItem label="Assembly Type">
-                            <Select onChange={onChangeAssemblyTypes}>
+                            <Select onChange={onChangeAssemblyTypes}  >
                                 {renderedAssemblyTypes}
                             </Select>
                         </FormItem>
                         <FormItem label="Fishing rod">
-                            <Select onChange={onChangeRodTypes}>
+                            <Select onChange={onChangeRodTypes}  >
                                 {renderedRodTypes}
                             </Select>
                         </FormItem>
                         <FormItem label="Length(sm)">
-                            <Input onInput={(e) => onEnterLength(e)} value={rodLength} type="Number"/>
+                            <Input onInput={(e) => onEnterLength(e)} value={rodLength} type="Number" />
                         </FormItem>
-                        <FormItem>
+                        <FormItem label="">
                             <Slider
                                 labelInterval={1}
                                 showTickmarks
@@ -226,12 +226,13 @@ export default function NewRodPage() {
                                 onChange={onEnterLength}
                                 onInput={onEnterLength}
                                 value={rodLength}
+
                             />
                         </FormItem>
                         <FormItem label="Length Knee(sm)">
-                            <Input onInput={(e) => onEnterLengthKnee(e)} value={rodLengthKnee} type="Number"/>
+                            <Input onInput={(e) => onEnterLengthKnee(e)} value={rodLengthKnee} type="Number" />
                         </FormItem>
-                        <FormItem>
+                        <FormItem label="">
                             <Slider
                                 labelInterval={1}
                                 showTickmarks
@@ -243,9 +244,9 @@ export default function NewRodPage() {
                             />
                         </FormItem>
                         <FormItem label="Knee Handle Length(sm)">
-                            <Input onInput={(e) => onEnterLengthKnee(e)} value={rodKneeHandleLength} type="Number"/>
+                            <Input onInput={(e) => onEnterLengthKnee(e)} value={rodKneeHandleLength} type="Number" />
                         </FormItem>
-                        <FormItem>
+                        <FormItem label="">
                             <Slider
                                 labelInterval={1}
                                 showTickmarks
@@ -257,42 +258,42 @@ export default function NewRodPage() {
                             />
                         </FormItem>
                         <FormItem label="Number of rod knees">
-                            <Input disabled value={rodNumberKnee} type="Number"/>
+                            <Input disabled value={rodNumberKnee} type="Number" />
                         </FormItem>
                         <FormItem label="Number of fishing rod rings">
-                            <Input disabled value={rodNumberRings} type="Number"/>
+                            <Input disabled value={rodNumberRings} type="Number" />
                         </FormItem>
                         <FormItem label="Lead ring inserts">
                             {renderedInsertsButtons}
                         </FormItem>
                         <FormItem label="Min fishing rod test(gram)">
-                            <Input value={rodMinTest} onInput={(e) => onEnterMinTest(e)} type="Number"/>
+                            <Input onInput={(e) => onEnterMinTest(e)} type="Number" placeholder="Enter min fishing rod test" />
                         </FormItem>
                         <FormItem label="Max fishing rod test(gram)">
-                            <Input value={rodMaxTest} onInput={(e) => onEnterMaxTest(e)} type="Number"/>
+                            <Input onInput={(e) => onEnterMaxTest(e)} type="Number" placeholder="Enter max fishing rod test" />
                         </FormItem>
                         <FormItem label="Rod material">
-                            <Select onChange={onChangeRodMaterials}>
+                            <Select onChange={onChangeRodMaterials}  >
                                 {renderedMaterialsRod}
                             </Select>
                         </FormItem>
                         <FormItem label="Reel seat">
-                            <Select onChange={onChangeRodReelSeat}>
+                            <Select onChange={onChangeRodReelSeat}  >
                                 {renderedReelSeat}
                             </Select>
                         </FormItem>
                         <FormItem label="Rod handle material">
-                            <Select onChange={onChangeRodHandleMaterials}>
+                            <Select onChange={onChangeRodHandleMaterials}  >
                                 {renderedMaterialsHandle}
                             </Select>
                         </FormItem>
                         <FormItem label="Made in">
-                            <Select onChange={onChangeCountries}>
+                            <Select onChange={onChangeCountries}  >
                                 {renderedCountries}
                             </Select>
                         </FormItem>
                         <FormItem label="Weight fishing rod(gram)">
-                            <Input value={rodWeight} onInput={(e) => onEnterWeight(e)} type="Number"/>
+                            <Input onInput={(e) => onEnterWeight(e)} type="Number" placeholder="Enter Weight" />
                         </FormItem>
                     </FormGroup>
                 </Form>
