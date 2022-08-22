@@ -154,4 +154,4 @@ export const materialsRodSelector = (state) => state.data.materialsRod
 export const materialsHandleSelector = (state) => state.data.materialsHandle
 export const reelSeatSelector = (state) => state.data.reelSeat
 export const insertsSelector = (state) => state.data.inserts
-export const newIdSelector = state => state.data.newId
+export const newIdSelector = (state) => state.data.newId
