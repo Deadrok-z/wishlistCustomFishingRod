@@ -7,8 +7,22 @@ const initialState = {
     materialsRod: [],
     materialsHandle: [],
     reelSeat: [],
-    inserts: []
+    inserts: [],
+    newId:'',
 }
+
+export const fetchNewId = createAsyncThunk('newRod/fetchNewId', async ()=>{
+    const response = await fetch('/browse/getNewId', {
+        method: "POST",
+        headers: {
+          Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
+          "Content-Type": "application/json"
+        }
+    })
+
+    const result = await response.json()
+    return result.ID
+})
 
 export const fetchCountries = createAsyncThunk('countries/fetchCountries', async () => {
     const response = await fetch("browse/Countries", {
@@ -94,6 +108,18 @@ export const fetchaInserts = createAsyncThunk('inserts/fetchaInserts', async () 
     return result.value
 })
 
+export const fetchAddNewRod = createAsyncThunk('rods/fetchAddNewRod', async (newRod)=>{
+    const response = await fetch('/admin/Rods', {
+        method: "POST",
+        headers: {
+          Authorization: "Basic YWRtaW46ZHNnc2RnZHM=",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newRod)
+    })
+    return await response.json()
+})
+
 export const newRodPageSlice = createSlice({
     name: 'data',
     initialState,
@@ -113,6 +139,8 @@ export const newRodPageSlice = createSlice({
             state.reelSeat.push(...action.payload)
         }).addCase(fetchaInserts.fulfilled, (state, action) => {
             state.inserts.push(...action.payload)
+        }).addCase(fetchNewId.fulfilled, (state, action)=>{
+            state.newId = action.payload
         })
     }
 })
@@ -124,5 +152,6 @@ export const assemblyTypesSelector = (state) => state.data.assemblyTypes
 export const rodTypesSelector = (state) => state.data.rodTypes
 export const materialsRodSelector = (state) => state.data.materialsRod
 export const materialsHandleSelector = (state) => state.data.materialsHandle
-export const reelSeatSelector = (state) => state.data.materialsHandle
+export const reelSeatSelector = (state) => state.data.reelSeat
 export const insertsSelector = (state) => state.data.inserts
+export const newIdSelector = state => state.data.newId

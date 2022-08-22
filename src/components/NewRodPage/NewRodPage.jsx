@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     Form,
@@ -19,6 +20,7 @@ import {
     materialsHandleSelector,
     reelSeatSelector,
     insertsSelector,
+    newIdSelector,
     fetchCountries,
     fetchaAssemblyTypes,
     fetchaRodTypes,
@@ -26,9 +28,14 @@ import {
     fetchaMaterialsHandle,
     fetchaReelSeat,
     fetchaInserts,
+    fetchNewId,
+    fetchAddNewRod,
 } from '../../features/newRodPage/newRodPageSlice';
+import { Routings } from '../../Routes/routes';
 
 export default function NewRodPage() {
+
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [rodName, setRodName] = useState('');
     const [rodPrice, setRodPrice] = useState(0);
@@ -40,14 +47,14 @@ export default function NewRodPage() {
     const [rodMinTest, setRodMinTest] = useState(0);
     const [rodMaxTest, setRodMaxTest] = useState(0);
     const [rodWeight, setRodWeight] = useState(0);
-    const [rodCountries, setRodCountries] = useState('');
-    const [rodAssemblyTypes, setRodAssemblyTypes] = useState('');
-    const [rodTypes, setRodTypes] = useState('Feeder');
+    const [rodCountries, setRodCountries] = useState('DE');
+    const [rodAssemblyTypes, setRodAssemblyTypes] = useState('C');
+    const [rodTypes, setRodTypes] = useState('F');
     const [rodMaximumLength, setRodMaximumLength] = useState(0);
-    const [rodMaterials, setRodMaterials] = useState('');
-    const [rodHandleMaterials, setRodHandleMaterials] = useState('');
-    const [rodReelSeat, setRodReelSeat] = useState('');
-    const [rodInserts, setRodInserts] = useState('');
+    const [rodMaterials, setRodMaterials] = useState('C');
+    const [rodHandleMaterials, setRodHandleMaterials] = useState('C');
+    const [rodReelSeat, setRodReelSeat] = useState('S');
+    const [rodInserts, setRodInserts] = useState('S');
 
     useEffect(() => {
         onСalculateNumberKnee(rodLength, rodLengthKnee);
@@ -57,28 +64,21 @@ export default function NewRodPage() {
 
     const onEnterName = (e) => {
         setRodName(e.target.value)
-        console.log(rodName)
     };
     const onEnterPrice = (e) => {
         setRodPrice(e.target.value)
-        console.log(rodPrice)
     };
     const onEnterLength = (e) => {
         setRodLength(e.target.value)
-
-        console.log(rodLength)
     };
     const onEnterLengthKnee = (e) => {
         setRodLengthKnee(e.target.value)
-        console.log(rodLengthKnee)
     };
     const onEnterKneeHandleLength = (e) => {
         setRodKneeHandleLength(e.target.value)
-        console.log(rodKneeHandleLength)
     };
     const onСalculateNumberKnee = (rodLength, rodLengthKnee) => {
         setRodNumberKnee(Math.ceil((Number(rodLength)) / (Number(rodLengthKnee) - 5)))
-        console.log(rodNumberKnee)
     };
     const onСalculateNumberRings = (rodLength, rodKneeHandleLength) => {
         const d = 2.5;
@@ -89,61 +89,50 @@ export default function NewRodPage() {
         const n1 = ((d - 2 * a) + Math.sqrt(D)) / (2 * d);
         const n2 = ((d - 2 * a) - Math.sqrt(D)) / (2 * d);
         setRodNumberRings(Math.ceil(n1 < 0 ? n2 : n1));
-        console.log(rodNumberRings)
     };
     const onEnterMinTest = (e) => {
         setRodMinTest(e.target.value)
-        console.log(rodMinTest)
     };
     const onEnterMaxTest = (e) => {
         setRodMaxTest(e.target.value)
-        console.log(rodMaxTest)
     };
     const onEnterWeight = (e) => {
         setRodWeight(e.target.value)
-        console.log(rodWeight)
     };
     const onChangeCountries = (e) => {
-        setRodCountries(e.target.selectedItem)
-        console.log(rodCountries)
+        setRodCountries(e.detail.selectedOption.dataset.id)
     };
     const onChangeAssemblyTypes = (e) => {
-        setRodAssemblyTypes(e.target.selectedItem)
-        console.log(rodAssemblyTypes)
+        setRodAssemblyTypes(e.detail.selectedOption.dataset.id)
     };
     const onChangeRodTypes = (e) => {
-        setRodTypes(e.detail.selectedOption.value)
-        console.log(rodTypes)
+        setRodTypes(e.detail.selectedOption.dataset.id)
     };
     const onChooseMaximumLength = (rodTypes) => {
-        if (rodTypes == "Feeder") {
+        if (rodTypes == "F") {
             setRodMaximumLength(600);
         }
-        if (rodTypes == "Spinning") {
+        if (rodTypes == "S") {
             setRodMaximumLength(300);
         }
-        if (rodTypes == "Pole rod") {
+        if (rodTypes == "P") {
             setRodMaximumLength(2000);
         }
-        if (rodTypes == "Fishing rod") {
+        if (rodTypes == "R") {
             setRodMaximumLength(1000);
         }
     };
     const onChangeRodMaterials = (e) => {
-        setRodMaterials(e.target.selectedItem)
-        console.log(rodMaterials)
+        setRodMaterials(e.detail.selectedOption.dataset.id)
     };
     const onChangeRodHandleMaterials = (e) => {
-        setRodHandleMaterials(e.target.selectedItem)
-        console.log(rodHandleMaterials)
+        setRodHandleMaterials(e.detail.selectedOption.dataset.id)
     };
     const onChangeRodReelSeat = (e) => {
-        setRodReelSeat(e.target.selectedItem)
-        console.log(rodReelSeat)
+        setRodReelSeat(e.detail.selectedOption.dataset.id)
     };
     const onChangeRodInserts = (e) => {
-        setRodInserts(e.target.text)
-        console.log(rodInserts)
+        setRodInserts(e.target.accessibleNameRef)
     };
 
     const countries = useSelector(countriesSelector);
@@ -153,8 +142,10 @@ export default function NewRodPage() {
     const materialsHandle = useSelector(materialsHandleSelector);
     const reelSeat = useSelector(reelSeatSelector);
     const inserts = useSelector(insertsSelector);
+    const newId = useSelector(newIdSelector)
 
     useEffect(() => {
+        dispatch(fetchNewId())
         if (countries.length === 0) dispatch(fetchCountries());
         if (assemblyTypes.length === 0) dispatch(fetchaAssemblyTypes());
         if (rRodTypes.length === 0) dispatch(fetchaRodTypes());
@@ -164,6 +155,30 @@ export default function NewRodPage() {
         if (inserts.length === 0) dispatch(fetchaInserts());
     }, [dispatch])
 
+    const onSaveRod = () => {
+        const newRod = {
+            ID: newId,
+            AssemblyType: {ID:rodAssemblyTypes},
+            MaterialHandle: {ID:rodHandleMaterials},
+            MaterialRod: {ID:rodMaterials},
+            Weight: Number(rodWeight),
+            Name: rodName,
+            Price: Number(rodPrice),
+            Length: Number(rodLength),
+            LengthKnee: Number(rodLengthKnee),
+            LengthHandle: Number(rodKneeHandleLength),
+            ReelSeat: {ID:rodReelSeat},
+            MaxTest: Number(rodMaxTest),
+            MinTest: Number(rodMinTest),
+            Country: {ID:rodCountries},
+            Type: {ID:rodTypes},
+            Inserts: {ID:rodInserts}
+        }
+        dispatch(fetchAddNewRod(newRod)).then(() => {
+            navigate(Routings.INDEX)
+        })
+    }
+
     const renderedCountries = countries.map(countrie => {
         return <Option key={countrie.ID}>{countrie.Text}</Option>
     })
@@ -171,7 +186,7 @@ export default function NewRodPage() {
         return <Option key={assemblyType.ID}>{assemblyType.Text}</Option>
     })
     const renderedRodTypes = rRodTypes.map(rRodType => {
-        return <Option key={rRodType.ID} value={rRodType.Text} >{rRodType.Text}</Option>
+        return <Option key={rRodType.ID} value={rRodType.Text} data-id={rRodType.ID}>{rRodType.Text}</Option>
     })
     const renderedMaterialsRod = materialsRod.map(materialRod => {
         return <Option key={materialRod.ID} data-id={materialRod.ID}>{materialRod.Text}</Option>
@@ -183,7 +198,7 @@ export default function NewRodPage() {
         return <Option key={reelSeat.ID}>{reelSeat.Text}</Option>
     })
     const renderedInsertsButtons = inserts.map(insert => {
-        return <RadioButton checked key={insert.ID} name="GroupA" text={insert.Text} onChange={onChangeRodInserts} />
+        return <RadioButton checked  accessibleNameRef={insert.ID} key={insert.ID} name="GroupA" text={insert.Text} onChange={onChangeRodInserts} />
     })
 
     return (
@@ -298,7 +313,7 @@ export default function NewRodPage() {
                     </FormGroup>
                 </Form>
             </div>
-            <Footer />
+            <Footer onClick={onSaveRod} />
         </>
 
     );
